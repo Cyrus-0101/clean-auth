@@ -31,7 +31,7 @@
     "lint": "eslint -c eslint.config.json --fix",
     "build": "npm-run-all clean lint tsc",
     "dev:start": "bun src/server.ts",
-    "dev": "bun --watch ./src/server.ts -e ts,ejs --exec bun run dev:start",
+    "dev": "bun --watch ./src/**.ts --exec bun run dev:start",
     "start": "node .",
     "test": "nyc --clean --all --require ts-node/register --require tsconfig-paths/register --require reflect-metadata/Reflect --extension .ts -- mocha --exit --timeout 5000",
     "test:all": "bun test __tests__/**/*.spec.ts"
@@ -42,6 +42,7 @@
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/webpack-env": "^1.18.5",
+    "body-parser": "^1.20.3",
     "dotenv": "^16.4.7",
     "eslint": "^9.16.0",
     "express": "^4.21.1",

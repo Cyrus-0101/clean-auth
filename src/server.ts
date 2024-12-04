@@ -1,12 +1,43 @@
-import express from "express";
+import "reflect-metadata";
+import { Container } from "inversify";
+import { InversifyExpressServer } from "inversify-express-utils";
+import * as Express from "express";
+import bodyParser from "body-parser";
 
-const app = express();
-const port = 8080;
+// Declare metadata by @controller annotation
+import "./entrypoint/controllers/AuthController";
+import AuthServiceLocator from "./configuration/usecases/AuthServiceLocator";
+import { TYPES } from "./constants/types";
+import type IUserReadOnlyRepository from "./application/repositories/IUserReadOnlyRepository";
+import UserRepository from "./infrastructure/UserRepository";
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+// Set up container
+const container = new Container();
+
+// Set up bindings
+container
+  .bind<AuthServiceLocator>(TYPES.AuthServiceLocator)
+  .to(AuthServiceLocator);
+
+container
+  .bind<IUserReadOnlyRepository>(TYPES.IUserReadOnlyRepository)
+  .to(UserRepository);
+
+// Create server
+const server = new InversifyExpressServer(container);
+server.setConfig((app: Express.Application) => {
+  // add body parser
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    })
+  );
+
+  app.use(bodyParser.json());
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port}...`);
+const app = server.build();
+
+app.listen(3000, () => {
+  console.log("Inversify app running on port 3000");
 });

@@ -8,6 +8,9 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
+    "types": ["node", "@faker-js/faker"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     // Bundler mode
     "moduleResolution": "bundler",
