@@ -1,0 +1,56 @@
+{
+  "name": "clean-auth",
+  "module": "src/server.ts",
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@types/bun": "latest",
+    "@types/chai": "^5.0.1",
+    "@types/chai-http": "^4.2.4",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.10.1",
+    "@types/sinon-chai": "^4.0.0",
+    "chai": "^5.1.2",
+    "chai-http": "^5.1.1",
+    "globals": "^15.13.0",
+    "mocha": "^11.0.1",
+    "nyc": "^17.1.0",
+    "rimraf": "^6.0.1",
+    "sinon": "^19.0.2",
+    "sinon-chai": "^4.0.0",
+    "ts-mocha": "^10.0.0",
+    "typescript-eslint": "^8.17.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "lint": "eslint -c eslint.config.json --fix",
+    "build": "npm-run-all clean lint tsc",
+    "dev:start": "bun src/server.ts",
+    "dev": "bun --watch ./src/server.ts -e ts,ejs --exec bun run dev:start",
+    "start": "node .",
+    "test": "nyc --clean --all --require ts-node/register --require tsconfig-paths/register --require reflect-metadata/Reflect --extension .ts -- mocha --exit --timeout 5000",
+    "test:all": "bun test __tests__/**/*.spec.ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@types/express-promise-router": "^3.0.2",
+    "@types/joi": "^17.2.3",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/webpack-env": "^1.18.5",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.16.0",
+    "express": "^4.21.1",
+    "express-promise-router": "^4.1.1",
+    "inversify": "^6.1.6",
+    "inversify-express-utils": "^6.4.8",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
+    "reflect-metadata": "^0.2.2"
+  }
+}
